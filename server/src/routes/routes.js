@@ -1,7 +1,7 @@
 const express = require('express')
-const promptController = require('../controllers/prompt-controller')
-const routes = express.Router()
+const imageCaptionController = require('../controllers/image-caption-controller');
 
-routes.post('/api/prompt', promptController.sendText)
+const routes = express.Router()
+routes.get("/api/one", imageCaptionController.captionImage);
 
 module.exports = routes
