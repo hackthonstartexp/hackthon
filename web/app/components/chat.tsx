@@ -543,7 +543,7 @@ export function ChatActions(props: {
 
       <ChatAction
         onClick={selectImage}
-        text="选择图片"
+        text={Locale.Midjourney.SelectImg}
         icon={<UploadIcon />}
         innerNode={
           <input

@@ -16,6 +16,7 @@ const generateTitle = async (input) => {
 			}),
 			method: 'POST'
 		}).then(res => res.text());
+		console.log("----", response)
 		return TitleGenerator.extract(response);
 	} catch (error) {
 		console.log(error);
@@ -82,15 +83,19 @@ const captionImage = async (req, res) => {
 		}).then(res => res.json());
 		console.log("request got response now!!!");
 		const { result } = response;
+		console.log("result", result);
 
 		await Promise.all(result.map(async r => {
 			const text = mappedLangs[0] ? r.i18n[mappedLangs[0]] || r.text : r.text;
+			console.log(text);
 			const [titleAndTags, description] = await Promise.all([generateTitle(text), generateDescription(text)]);
 			r.description = description;
 			const randomIdx = Math.floor(Math.random()*titleAndTags.length);
 			const randomPairs = titleAndTags[randomIdx];
+			console.log("randomIdx, randomPairs, titleAndTags", randomIdx, randomPairs, titleAndTags, description);
 			r.title = randomPairs.title;
 			r.tags = randomPairs.tags;
+			console.log("r", r);
 		}))
 
 

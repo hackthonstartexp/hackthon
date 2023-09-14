@@ -8,12 +8,13 @@ class TitleGenerator {
 		const validRaws = raws.filter(s => s);
 
 		const results = [];
+		console.log("validRaws", validRaws, rawResp);
 		validRaws.forEach(raw => {
 			const parts = raw.split("#");
 			const title = parts[0];
 			const validTags = parts.slice(1, -1);
 			const ret = {
-				title: title.trim().replace(/^\d\./, ""),
+				title: title.trim().replace(/^\d\./, "").trim(),
 				tags: validTags
 			}
 			results.push(ret);

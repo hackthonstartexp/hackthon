@@ -21,6 +21,7 @@ const en: LocaleType = {
   },
   Midjourney: {
     SelectImgMax: (max: number) => `Select up to ${max} images`,
+    SelectImg: "Select images",
     InputDisabled: "Input is disabled in this mode",
     HasImgTip:
       "Tip: In the mask mode, only the first image will be used. In the blend/Lemon8 mode, the five selected images will be used in order (click the image to remove it)",
@@ -42,7 +43,7 @@ const en: LocaleType = {
     UnknownError: "Unknown error",
     UnknownReason: "Unknown reason",
     RedbookPlus: "Redbook style image caption",
-    RedbookPlusResult: (title: string, tag: string, description: string) => `**Title:** ${title}\n**Tags: **${tag}\n**Description: **${description}\n`,
+    RedbookPlusResult: (title: string, tag: string, description: string) => `**Title:** ${title}\n **Tags:** ${tag}\n **Description:** ${description}\n`,
     TaskPrefix: (prompt: string, taskId: string) =>
       `**Prompt:** ${prompt}\n**Task ID:** ${taskId}\n`,
     PleaseWait: "Please wait a moment",
