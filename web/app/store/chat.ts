@@ -520,12 +520,42 @@ export const useChatStore = create<ChatStore>()(
                   const base64Array = extAttr.useImages.map(
                     (ui: any) => ui.base64,
                   );
-                  res = await reqFn(
-                    "submit/describeplus",
-                    "POST",
-                    JSON.stringify({ base64Array }),
-                  );
-                  break;
+
+                  const endpoint = "//localhost:5000/api/mj/caption"
+
+                  for(let i=0; i<base64Array.length;i++) {
+                    const taskId = Math.random().toString(16).slice(2);
+                    const prefixContent = Locale.Midjourney.TaskPrefix(
+                      `**[${Locale.Midjourney.RedbookPlus}]:**\n![${taskId}](${base64Array[i]})`,
+                      taskId,
+                    );
+                    botMessage.content =
+                      prefixContent +
+                        `[${new Date().toLocaleString()}] - ${
+                          Locale.Midjourney.TaskSubmitOk
+                        }: ` + Locale.Midjourney.PleaseWait + '\n';
+                  }
+
+                  res = await fetch(endpoint, {
+                    method: "POST",
+                    headers: getHeaders(),
+                    body: JSON.stringify({
+                      images: base64Array,
+                      langs: [getLang()]
+                    }),
+                  });
+                  botMessage.attr.writeOnly = true;
+                  const resJson = await res.json();
+
+                  if (resJson.code === 1) {
+                    const data = resJson.data;
+                    console.log("response is ", data);
+                    data.forEach((item: any) => {
+                      const {title = "", tags = "", text} = item;
+                      botMessage.content += `${Locale.Midjourney.RedbookPlusResult(title, tags, text)}`
+                    })
+                  }
+                  return;
                 }
                 case "BLEND": {
                   const base64Array = extAttr.useImages.map(
@@ -574,7 +604,7 @@ export const useChatStore = create<ChatStore>()(
               if (
                 res.status < 200 ||
                 res.status >= 300 ||
-                (resJson.code != 1 && resJson.code != 22)
+                (resJson.code != 1 && resJson.code != 22 && res.status !== 200)
               ) {
                 botMessage.content = Locale.Midjourney.TaskSubmitErr(
                   resJson?.msg ||

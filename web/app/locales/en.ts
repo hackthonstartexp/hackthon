@@ -41,6 +41,8 @@ const en: LocaleType = {
     None: "None",
     UnknownError: "Unknown error",
     UnknownReason: "Unknown reason",
+    RedbookPlus: "Redbook style image caption",
+    RedbookPlusResult: (title: string, tag: string, description: string) => `**Title:** ${title}\n**Tags: **${tag}\n**Description: **${description}\n`,
     TaskPrefix: (prompt: string, taskId: string) =>
       `**Prompt:** ${prompt}\n**Task ID:** ${taskId}\n`,
     PleaseWait: "Please wait a moment",

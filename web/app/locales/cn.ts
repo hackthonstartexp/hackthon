@@ -39,6 +39,8 @@ const cn = {
     None: "无",
     UnknownError: "未知错误",
     UnknownReason: "未知原因",
+    RedbookPlus: "小红书信息生成",
+    RedbookPlusResult: (title: string, tag: string, description: string) => `**标题:** ${title}\n **标签:** ${tag}\n **描述:** ${description}\n`,
     TaskPrefix: (prompt: string, taskId: string) =>
       `**画面描述:** ${prompt}\n**任务ID:** ${taskId}\n`,
     PleaseWait: "请稍等片刻",
