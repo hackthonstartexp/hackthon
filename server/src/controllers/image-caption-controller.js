@@ -1,22 +1,56 @@
-const inputPrompt = require("../models/input-prompt")
+const { TitleGenerator, DescriptionGenerator } = require("../models/image-caption-model")
+
+
+const titleGeneratorEndpoint = "https://open-gpt.app/api/generate";
+const titleGeneratorId = "clfjbasiy000ola09946i7xv8";
 
 module.exports = {
+	async generateTitle(input) {
+		try {
+			const response  = await fetch(titleGeneratorEndpoint, {
+				headers: {
+					'x-api-key': `token ${apiKey}`,
+					'content-type': 'application/json'
+				},
+				body: JSON.stringify({
+					userInput: input,
+					id: TitleGenerator.ID,
+					userKey: TitleGenerator.UserKey
+				}),
+				method: 'POST'
+			}).then(res => res.json());
+
+			// const resp
+		} catch (error) {
+
+		}
+	},
+
 	async captionImage(req, res){
 
 		const apiKey = process.env.JINAAI_SECRET;
-		// const payload = req.query;
+
+		// https://scenex.jina.ai/api
+		const {langs = ["en"], alg, features = [], len = 200,  style = "default", images = [] } = req.body;
+
+		const data = images.map(image => {
+			return {
+				image,
+				languages: langs,
+				algorithm: alg || "Aqua",
+				features,
+				output_length: len,
+				style,
+
+			}
+		})
 		try {
 			const response = await fetch('https://api.scenex.jina.ai/v1/describe', {
 				headers: {
 					'x-api-key': `token ${apiKey}`,
 					'content-type': 'application/json'
 				},
-				body: JSON.stringify({
-					data: [
-				{image: "https://picsum.photos/200", features: []},
-				{image: "https://cdn.discordapp.com/attachments/1083723388712919182/1089909178266558554/HannaD_A_captivating_digital_artwork_features_a_red-haired_girl_664d73dc-b537-490e-b044-4fbf22733559.png", features: []},
-				]
-				}),
+				body: JSON.stringify({data}),
 				method: 'POST'
 			}).then(res => res.json());
 
