@@ -1,6 +1,6 @@
 class TitleGenerator {
 	static ID = "clfjbasiy000ola09946i7xv8";
-	static UserKey = "0D89F37D-E002-4CA3-9BB4-2C672D0082EE";
+	static UserKey = "919FC6DB-E852-42D7-9B41-826A9F6EFB97";
 
 
 	static extract(rawResp) {
@@ -8,7 +8,6 @@ class TitleGenerator {
 		const validRaws = raws.filter(s => s);
 
 		const results = [];
-		console.log("validRaws", validRaws, rawResp);
 		validRaws.forEach(raw => {
 			const parts = raw.split("#");
 			const title = parts[0];
@@ -26,7 +25,7 @@ class TitleGenerator {
 
 class DescriptionGenerator {
 	static ID = "clf2awmv0001mjt08hjtcpe90";
-	static UserKey = "0D89F37D-E002-4CA3-9BB4-2C672D0082EE";
+	static UserKey = "919FC6DB-E852-42D7-9B41-826A9F6EFB97";
 
 	static extract(response) {
 		return response;
